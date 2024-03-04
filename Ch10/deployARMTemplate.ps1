@@ -2,7 +2,9 @@
 # Parameters
 $resourceGroupName = "armdemoRG"
 $deploymentName = "VMDeploymentv1"
-$templateFilePath = "C:\Ultimate PowerShell Automation\ExportedTemplate-MyPowerShellRG\armtestdeployment.json"
+# Download the Ch10/Chapter 10 - ARM - Deploying Azure Virtual Machine with ARM Template.JSON" and save the templateFilePath.
+# Make sure to enter the correct path
+$templateFilePath = "C:\Ultimate PowerShell Automation\Chapter 10 - ARM - Deploying Azure Virtual Machine with ARM Template.JSON"
 $storageAccountName = "vmstg"
 $VirtualMachineName ="armdemovm"
 

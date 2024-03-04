@@ -1,0 +1,16 @@
+# Create the storage account in Microsoft Azure using ARM template.
+# Parameters
+$resourceGroupName = "MyPowerShellRG"
+$deploymentName = "StorageAccountDeploymentv1"
+$templateFilePath = "C:\Ultimate PowerShell Automation\storagetemplate.json"
+
+# Create a new resource group
+New-AzResourceGroup -Name $resourceGroupName -Location "CentralIndia"
+
+#Test the deployment
+Test-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $templateFilePath 
+
+# Deploy the ARM template
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
+    -Name $deploymentName `
+    -TemplateFile $templateFilePath 

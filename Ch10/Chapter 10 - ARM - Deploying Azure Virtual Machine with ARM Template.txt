@@ -1,0 +1,132 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "teststorage",
+      "metadata": {
+        "description": "Name for the storage account"
+      }
+    },
+    "virtualMachineName": {
+      "type": "string",
+      "defaultValue": "MyPoshVMARM",
+      "metadata": {
+        "description": "Name for the Virtual Machine"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    // Storage Account
+    {
+      "name": "[concat(parameters('storageAccountName'), uniqueString(resourceGroup().id))]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "accountType": "Standard_LRS"
+      }
+    },
+    // Virtual Network
+    {
+      "name": "test-net",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": ["10.0.0.0/16"]
+        },
+        "subnets": [
+          {
+            "name": "frontendSubnet",
+            "properties": {
+              "addressPrefix": "10.0.1.0/24"
+            }
+          }
+        ]
+      }
+    },
+    // Public IP Address
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "test-publicip",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    // Network Interface
+    {
+      "name": "[concat(parameters('virtualMachineName'), '-nic0')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2017-06-01",
+      "dependsOn": [
+        "[concat(resourceId('Microsoft.Network/virtualNetworks', 'test-net'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'test-publicip')]"
+              },
+              "subnet": {
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'test-net'), '/subnets/', 'frontendSubnet')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    // Virtual Machine
+    {
+      "name": "[concat(parameters('virtualMachineName'))]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2017-03-30",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', parameters('virtualMachineName'), '-nic0')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_F2s_v2"
+        },
+        "osProfile": {
+          "computerName": "[parameters('virtualMachineName')]",
+          "adminUsername": "MyPOSHARMUser",
+          "adminPassword": "MyPOSHARMUser_PASSWORD12345678"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2022-datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Windows",
+            "name": "[concat(parameters('virtualMachineName'), '-', 'osdisk')]",
+            "createOption": "FromImage",
+            "caching": "ReadWrite"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('virtualMachineName')),'-nic0')]"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
+

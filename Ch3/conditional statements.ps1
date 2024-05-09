@@ -47,4 +47,14 @@ function Get-SystemInformation {
 # Display system information based on the detected OS
 Get-SystemInformation -os $operatingSystem
 
+# Set a custom environment variable for the current session
+$env:mydatabase = "AdventureWorks2022"
+
+# Display the custom environment variable
+Write-Output "Custom Variable: $($env:mydatabase)"
+
+$env:mydatabase = "AdventureWorks2022"
+$databaseName = $env:mydatabase
+Write-Output "Executing  script on database: $databaseName"
+
 

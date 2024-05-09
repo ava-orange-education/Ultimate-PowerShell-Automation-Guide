@@ -19,3 +19,4 @@ Foreach-Object {
     # Replace "Source=..." with the specified database server
     $_ -replace "Catalog=([A-Za-z0-9_]+)", $db -replace "Source=([A-Za-z0-9_]+)", $dbs
 } | Set-Content $XML
+Get-Content $XML

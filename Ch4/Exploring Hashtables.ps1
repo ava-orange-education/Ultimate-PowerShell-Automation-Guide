@@ -1,4 +1,4 @@
-# Create a hash table to store employee information
+# Create a Hashtable to store employee information
 $employeeInfo = @{
     "E101" = @{
         "Name" = "John Doe"
@@ -18,17 +18,17 @@ $employeeName = $employeeInfo["E101"]["Name"]
 $employeeDepartment = $employeeInfo["E101"]["Department"]
 
 # Add a new key-value pair
-$hashTable["Key4"] = "Value4"
+$Hashtable["Key4"] = "Value4"
 
 # Modify an existing value
-$hashTable["Key1"] = "NewValue1"
+$Hashtable["Key1"] = "NewValue1"
 
-#In the existing hash table example, let's add details of a new employee.
+#In the existing Hashtable example, let's add details of a new employee.
 $employeeInfo["E404"] = @{
     "Name" = "Eva Rodriguez"
     "Department" = "Marketing"
 }
-# Create a hash table to store employee information
+# Create a Hashtable to store employee information
 $employeeInfo = @{
     "E101" = @{
         "Name" = "John Doe"
@@ -68,13 +68,13 @@ Write-Output "Updated Employee Information for E101:"
 $updatedDepartmentE101 = $employeeInfo["E101"]["Department"]
 Write-Output "E101: $($employeeInfo['E101']['Name']), $($updatedDepartmentE101)"
 
-# Iterate through the hash table
+# Iterate through the Hashtable
 foreach ($key in $hashTable.Keys) {
     $value = $hashTable[$key]
     Write-Output "$key: $value"
 } 
 
-# Create a hash table to store employee information
+# Create a Hashtable to store employee information
 $employeeInfo = @{
     "E101" = @{
         "Name" = "John Doe"
@@ -100,7 +100,7 @@ foreach ($employeeId in $employeeInfo.Keys) {
 }
 
 
-# Create an ordered hashtable using the ordered keyword
+# Create an ordered Hashtable using the ordered keyword
 $employeeInfo = [ordered]@{
     "E101" = @{
         "Name" = "John Doe"
@@ -116,14 +116,14 @@ $employeeInfo = [ordered]@{
     }
 }
 
-# Iterate through the ordered hashtable and display key-value pairs
+# Iterate through the ordered Hashtable and display key-value pairs
 foreach ($entry in $employeeInfo.GetEnumerator()) {
     Write-Output "$($entry.Key): $($entry.Value.Name), $($entry.Value.Department)"
 }
 
 #Splatting Hashtables
 
-# Create a hash table with parameters for Send-MailMessage
+# Create a Hashtable with parameters for Send-MailMessage
 $mailParams = @{
     SmtpServer  = "smtp.contoso.com"
     To          = " rajendragupta@contoso.com"
@@ -139,7 +139,7 @@ Send-MailMessage @mailParams
 
 #Creating Objects from Hashtables
 
-# Create a hashtable with server specifications
+# Create a Hashtable with server specifications
 $serverSpecs = @{
     Name        = "Server001"
     IP          = "192.168.1.100"
@@ -148,7 +148,7 @@ $serverSpecs = @{
     CPU         = "Quad-Core"
 }
 
-# Convert the hashtable to a custom PowerShell object using [PSCustomObject]
+# Convert the Hashtable to a custom PowerShell object using [PSCustomObject]
 $serverObject = [PSCustomObject]$serverSpecs
 
 # Display the custom object
@@ -179,7 +179,7 @@ $employeeData = @{
     EmployeeID = "E101"
 }
 
-# Get the enumerator for the hashtable
+# Get the enumerator for the Hashtable
 $enumerator = $employeeData.GetEnumerator()
 
 # Specify the CSV file path
@@ -213,7 +213,7 @@ $csvFilePath = "C:\Path\To\Your\File.csv"
 # Create an array to store custom objects
 $employeeObjects = @()
 
-# Iterate through the hashtable to convert each entry to a custom object
+# Iterate through the Hashtable to convert each entry to a custom object
 foreach ($entry in $employeeData.GetEnumerator()) {
     $employeeObject = [PSCustomObject]@{
         EmployeeID = $entry.Key

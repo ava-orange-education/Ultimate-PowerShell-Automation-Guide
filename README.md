@@ -1,2 +1,2 @@
-# Ultimate-PowerShell-Automation-Guide
-Ultimate PowerShell Automation Guide, published by Orange, AVA™
+# Ultimate PowerShell Automation for System Administration
+Ultimate PowerShell Automation for System Administration, published by Orange, AVA™
